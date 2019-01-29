@@ -1,5 +1,6 @@
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
+import ArticlesBoard from "./articles/ArticlesBoard";
 
 export default class ApplicationViews extends Component {
   state = {
@@ -17,7 +18,7 @@ export default class ApplicationViews extends Component {
 
         <Route
           exact path="/" render={props => {
-            return null
+            return <ArticlesBoard />
             // Remove null and return the component which will show news articles
           }}
         />

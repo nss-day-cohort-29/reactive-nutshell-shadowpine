@@ -1,7 +1,7 @@
-const articlesUrl = "http://localhost:5002/articles"
+const remoteUrl = "http://localhost:5002/"
 
 export default {
     getAll() {
-        return fetch(``)
+        return fetch(`${remoteUrl}/articles`).then(r => r.json());
     }
 }
