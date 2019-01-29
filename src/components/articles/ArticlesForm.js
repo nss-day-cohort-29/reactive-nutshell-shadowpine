@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 
 export default class ArticlesForm extends Component {
+    state={
+        showForm: true
+    }
+
+    handleSubmitChange = () => {
+        this.setState({showForm: false})
+    }
 
     submitForm() {
         if(this.props.showForm === false){
@@ -25,7 +32,7 @@ export default class ArticlesForm extends Component {
                 URL
                 <input />
             </label>
-            <button>Submit</button>
+            <button onClick={this.state.handleSubmitChange}>Submit</button>
         </React.Fragment>)
         }
     }
