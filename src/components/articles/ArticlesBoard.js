@@ -13,7 +13,7 @@ export default class ArticlesBoard extends Component {
 
     addForm = () => {
         if(this.state.showForm){
-            return <ArticlesForm />
+            return <ArticlesForm handleChange={this.state.handleChange} props={this.state}/>
         } else {
             return (
                 <button

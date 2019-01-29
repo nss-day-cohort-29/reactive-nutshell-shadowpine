@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 
 export default class ArticlesForm extends Component {
-    state = {
-        hideForm: false
-    };
 
-    handleChange = () => {
-        this.setState= ({hideForm: true});
-    }
-
-    render() {
-      return (
-        <React.Fragment>
+    submitForm() {
+        if(this.props.showForm === false){
+            return (
+                <button
+                    className="article--new"
+                    onClick={this.props.handleChange}>
+                    Add Article
+                </button>
+            )
+        } else {
+          return (<React.Fragment>
             <label>
                 Title
                 <input />
@@ -25,6 +26,11 @@ export default class ArticlesForm extends Component {
                 <input />
             </label>
             <button>Submit</button>
-        </React.Fragment>
-      )}
+        </React.Fragment>)
+        }
+    }
+
+    render() {
+      return this.submitForm()
+    }
 }

@@ -19,7 +19,6 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-
 state = {
       articles: [],
       messages: [],
