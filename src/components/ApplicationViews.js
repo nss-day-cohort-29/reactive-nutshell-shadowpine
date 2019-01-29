@@ -1,6 +1,7 @@
 /* eslint-disable no-dupe-class-members */
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
+// import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
 import ArticlesBoard from "./articles/ArticlesBoard";
 //import ConnectionsBoard from "./connections/ConnectionsBoard";
@@ -49,10 +50,9 @@ deleteArticle = articleId => {
     );
 };
 
-
 // *********************************MESSAGES******************************************
 
-postNewMessage(messageObj) {
+postNewMessage = messageObj => {
   MessagesManager.post(messageObj)
   .then(() => MessagesManager.getAll()
   .then(messages => this.setState({
@@ -60,6 +60,21 @@ postNewMessage(messageObj) {
   })));
 }
 
+deleteMessage = id => {
+  MessagesManager.delete(id)
+  .then(() => MessagesManager.getAll()
+  .then(messages => this.setState({
+    messages: messages
+  })));
+}
+
+editMessage = (messageObj, id) => {
+  MessagesManager.put(messageObj, id)
+  .then(() => MessagesManager.getAll()
+  .then(messages => this.setState({
+    messages: messages
+  })));
+}
 
 // *********************************TASKS******************************************
   deleteTask = id => {
@@ -85,8 +100,8 @@ postNewMessage(messageObj) {
       })
     );
 
-
   componentDidMount() {
+    sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
       .then(allArticles => {
         this.setState({
@@ -98,13 +113,11 @@ postNewMessage(messageObj) {
         tasks: allTasks
       });
     });
-
     MessagesManager.getAll()
-    .then(messages => this.setState({
-      messages: messages
-    }));
-  }
-
+      .then(messages => this.setState({
+        messages: messages
+      }));
+    }
 
   render() {
     return (
@@ -126,8 +139,11 @@ postNewMessage(messageObj) {
 
         <Route
           path="/messages" render={props => {
-            return <MessagesBoard postNewMessage={this.postNewMessage} messages={this.state.messages} />
-            // Remove null and return the component which will show the messages
+            return <MessagesBoard {...props}
+              postNewMessage={this.postNewMessage}
+              deleteMessage={this.deleteMessage}
+              editMessage={this.deleteMessage}
+              messages={this.state.messages} />
           }}
         />
 
