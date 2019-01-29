@@ -100,7 +100,6 @@ postNewMessage(messageObj) {
 
 
   render() {
-    console.log(this.state)
     return (
       <React.Fragment>
 
