@@ -143,7 +143,7 @@ editMessage = (messageObj, id) => {
             return <MessagesBoard {...props}
               postNewMessage={this.postNewMessage}
               deleteMessage={this.deleteMessage}
-              editMessage={this.deleteMessage}
+              editMessage={this.editMessage}
               messages={this.state.messages} />
           }}
         />
