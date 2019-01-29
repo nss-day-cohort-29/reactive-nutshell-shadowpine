@@ -29,7 +29,7 @@ state = {
     }
 
 // *********************************ARTICLES******************************************
-addArticle(articleObject){
+addArticle = (articleObject) => {
   ArticlesManager.post(articleObject)
     .then(() => ArticlesManager.getAll())
     .then(articles =>
