@@ -7,7 +7,7 @@ export default class ArticlesBoard extends Component {
             <React.Fragment>
                 {/* Create title, new button, and articles container */}
                 <h1>Articles</h1>
-                <button class="article--new">Add Article</button>
+                <button className="article--new">Add Article</button>
                 <section className="articles">
                     {/* add each article to the DOM */}
                     {this.props.articles.map(article => (
