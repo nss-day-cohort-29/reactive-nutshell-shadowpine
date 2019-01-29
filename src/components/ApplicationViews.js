@@ -19,19 +19,13 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-  constructor() {
-    super();
-    this.state = {
+  state = {
       articles: [],
       messages: [],
       connections: [],
       events: [],
       tasks: []
-    }
-    this.postNewMessage = this.postNewMessage.bind(this);
-  }
-
-
+    };
 
   deleteTask = id => {
     return fetch(`http://localhost:5002/tasks/${id}`, {
@@ -47,15 +41,15 @@ export default class ApplicationViews extends Component {
       );
   };
 
-  addTask = task =>
-  TasksManager.post(task)
+  addTask = task =>{
+  return TasksManager.post(task)
     .then(() => TasksManager.getAll())
     .then(tasks =>
       this.setState({
         tasks: tasks
       })
     );
-
+    }
 
   componentDidMount() {
 
@@ -70,21 +64,6 @@ export default class ApplicationViews extends Component {
       messages: messages
     }));
 
-  }
-
-  postNewMessage(messageObj) {
-    MessagesManager.post(messageObj)
-    .then(() => MessagesManager.getAll()
-    .then(messages => this.setState({
-      messages: messages
-    })));
-  }
-
-  componentDidMount() {
-    MessagesManager.getAll()
-      .then(messages => this.setState({
-        messages: messages
-      }));
     ArticlesManager.getAll()
       .then(allArticles => {
         this.setState({
@@ -92,6 +71,16 @@ export default class ApplicationViews extends Component {
         });
       });
   }
+
+  postNewMessage(messageObj)
+  {
+    MessagesManager.post(messageObj)
+    .then(() => MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    })));
+  }
+
 
   render() {
     console.log(this.state)
@@ -120,7 +109,8 @@ export default class ApplicationViews extends Component {
         />
 
         <Route
-          path="/tasks" render={props => {
+          path="/tasks"
+          render={props => {
             return (
               <TasksBoard
                 {...props}
@@ -141,7 +131,6 @@ export default class ApplicationViews extends Component {
             );
           }}
         />
-
       </React.Fragment>
     );
   }
