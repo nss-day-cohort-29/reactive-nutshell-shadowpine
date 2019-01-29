@@ -12,5 +12,10 @@ export default {
             },
             body: JSON.stringify(newArticle)
         }).then(data => data.json())
+    },
+    delete(articleId) {
+        return fetch(`${remoteUrl}/articles/${articleId}`, {
+            method: "DELETE"
+        }).then(r => r.json())
     }
 };

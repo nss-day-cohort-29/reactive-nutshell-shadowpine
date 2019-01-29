@@ -19,17 +19,14 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-  constructor() {
-    super();
-    this.state = {
+
+state = {
       articles: [],
       messages: [],
       connections: [],
       events: [],
       tasks: []
     }
-    this.postNewMessage = this.postNewMessage.bind(this);
-  }
 
 // *********************************ARTICLES******************************************
 addArticle(articleObject){
@@ -41,6 +38,17 @@ addArticle(articleObject){
       })
   );
 }
+
+deleteArticle = articleId => {
+  ArticlesManager.delete(articleId)
+    .then(() => fetch("http://localhost:5002/articles"))
+    .then(r => r.json())
+    .then(articles =>
+      this.setState({
+        articles: articles
+      })
+    );
+};
 
 
 // *********************************MESSAGES******************************************
@@ -105,7 +113,7 @@ postNewMessage(messageObj) {
 
         <Route
           exact path="/" render={props => {
-            return <ArticlesBoard {...props} articles={this.state.articles}/>
+            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle}/>
             // Remove null and return the component which will show news articles
           }}
         />
