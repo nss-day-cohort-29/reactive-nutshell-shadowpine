@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-class-members */
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import TasksBoard from "./tasks/TasksBoard";
@@ -17,13 +18,19 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-  state = {
-    articles: [],
-    messages: [],
-    connections: [],
-    events: [],
-    tasks: []
-  };
+  constructor() {
+    super();
+    this.state = {
+      articles: [],
+      messages: [],
+      connections: [],
+      events: [],
+      tasks: []
+    }
+    this.postNewMessage = this.postNewMessage.bind(this);
+  }
+
+
 
   deleteTask = id => {
     return fetch(`http://localhost:5002/tasks/${id}`, {
@@ -57,26 +64,20 @@ export default class ApplicationViews extends Component {
         });
       });
 
-      // ArticlesManager.getAll().then(allArticles => {
-      //   this.setState({
-      //     articles: allArticles
-      //   });
-      // });
+      MessagesManager.getAll()
+      .then(messages => this.setState({
+        messages: messages
+      }));
 
-      // MessagesManager.getAll().then(allMessages => {
-      //   this.setState({
-      //     messages: allMessages
-      //   });
-      // });
-
-      // EventsManager.getAll().then(allEvents => {
-      //   this.setState({
-      //     events: allEvents
-      //   });
-      // });
     }
 
-
+  postNewMessage(messageObj) {
+    MessagesManager.post(messageObj)
+    .then(() => MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    })));
+  }
 
 
   render() {
@@ -99,7 +100,7 @@ export default class ApplicationViews extends Component {
 
         <Route
           path="/messages" render={props => {
-            return null
+            return <MessagesBoard postNewMessage={this.postNewMessage} messages={this.state.messages} />
             // Remove null and return the component which will show the messages
           }}
         />
