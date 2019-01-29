@@ -1,6 +1,7 @@
 /* eslint-disable no-dupe-class-members */
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
+// import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
 //import ArticlesBoard from "./articles/ArticlesBoard";
 //import ConnectionsBoard from "./connections/ConnectionsBoard";
@@ -19,19 +20,13 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      articles: [],
-      messages: [],
-      connections: [],
-      events: [],
-      tasks: []
-    }
-    this.postNewMessage = this.postNewMessage.bind(this);
+  state = {
+    articles: [],
+    messages: [],
+    connections: [],
+    events: [],
+    tasks: []
   }
-
-
 
   deleteTask = id => {
     return fetch(`http://localhost:5002/tasks/${id}`, {
@@ -58,7 +53,7 @@ export default class ApplicationViews extends Component {
 
 
     componentDidMount() {
-
+      sessionStorage.setItem("userId", 1);
       TasksManager.getAll().then(allTasks => {
         this.setState({
           tasks: allTasks
@@ -72,7 +67,7 @@ export default class ApplicationViews extends Component {
 
     }
 
-  postNewMessage(messageObj) {
+  postNewMessage = messageObj => {
     MessagesManager.post(messageObj)
     .then(() => MessagesManager.getAll()
     .then(messages => this.setState({
@@ -80,6 +75,21 @@ export default class ApplicationViews extends Component {
     })));
   }
 
+  deleteMessage = id => {
+    MessagesManager.delete(id)
+    .then(() => MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    })));
+  }
+
+  editMessage = (messageObj, id) => {
+    MessagesManager.put(messageObj, id)
+    .then(() => MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    })));
+  }
 
   render() {
     return (
@@ -101,8 +111,11 @@ export default class ApplicationViews extends Component {
 
         <Route
           path="/messages" render={props => {
-            return <MessagesBoard postNewMessage={this.postNewMessage} messages={this.state.messages} />
-            // Remove null and return the component which will show the messages
+            return <MessagesBoard {...props}
+              postNewMessage={this.postNewMessage}
+              deleteMessage={this.deleteMessage}
+              editMessage={this.deleteMessage}
+              messages={this.state.messages} />
           }}
         />
 

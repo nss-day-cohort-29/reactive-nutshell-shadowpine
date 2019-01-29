@@ -30,7 +30,6 @@ export default {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(messageObj)
-        })
-        .then(() => fetch(`${remoteUrl}/animals`))
+        });
     }
 }
