@@ -24,7 +24,7 @@ export default class MessagesForm extends Component {
         const newObject = {
             content: this.state.newMessage,
             userId: 1,
-            timeStamp: ""
+            timeStamp: new Date()
         }
         this.props.postNewMessage(newObject);
     }
