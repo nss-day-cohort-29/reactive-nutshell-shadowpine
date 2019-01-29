@@ -7,9 +7,10 @@ export default class ArticleCard extends Component {
             <div key={this.props.article.id} className="card">
                 <div className="card-body">
                     <h5 className="card-title">
-                        <h3>{this.props.article.title}</h3>
-                        <button>Delete</button>
+                        {this.props.article.title}
                     </h5>
+                    <p>{this.props.article.synopsis}</p>
+                    <button>Delete</button>
                 </div>
             </div>
         )

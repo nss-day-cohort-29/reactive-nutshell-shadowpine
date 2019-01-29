@@ -18,14 +18,6 @@ import TasksForm from "./tasks/TasksForm";
 
 
 export default class ApplicationViews extends Component {
-  state = {
-    users: [],
-    messages: [],
-    articles: [],
-    tasks: [],
-    events: [],
-    connections: []
-  }
 
   constructor() {
     super();
@@ -65,20 +57,20 @@ export default class ApplicationViews extends Component {
     );
 
 
-    componentDidMount() {
+  componentDidMount() {
 
-      TasksManager.getAll().then(allTasks => {
-        this.setState({
-          tasks: allTasks
-        });
+    TasksManager.getAll().then(allTasks => {
+      this.setState({
+        tasks: allTasks
       });
+    });
 
-      MessagesManager.getAll()
-      .then(messages => this.setState({
-        messages: messages
-      }));
+    MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    }));
 
-    }
+  }
 
   postNewMessage(messageObj) {
     MessagesManager.post(messageObj)
