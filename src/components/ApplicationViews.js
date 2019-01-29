@@ -2,7 +2,7 @@
 import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import TasksBoard from "./tasks/TasksBoard";
-//import ArticlesBoard from "./articles/ArticlesBoard";
+import ArticlesBoard from "./articles/ArticlesBoard";
 //import ConnectionsBoard from "./connections/ConnectionsBoard";
 //import EventsBoard from "./events/EventsBoard";
 import MessagesBoard from "./messages/MessagesBoard";
@@ -57,20 +57,20 @@ export default class ApplicationViews extends Component {
     );
 
 
-    componentDidMount() {
+  componentDidMount() {
 
-      TasksManager.getAll().then(allTasks => {
-        this.setState({
-          tasks: allTasks
-        });
+    TasksManager.getAll().then(allTasks => {
+      this.setState({
+        tasks: allTasks
       });
+    });
 
-      MessagesManager.getAll()
-      .then(messages => this.setState({
-        messages: messages
-      }));
+    MessagesManager.getAll()
+    .then(messages => this.setState({
+      messages: messages
+    }));
 
-    }
+  }
 
   postNewMessage(messageObj) {
     MessagesManager.post(messageObj)
@@ -80,14 +80,27 @@ export default class ApplicationViews extends Component {
     })));
   }
 
+  componentDidMount() {
+    MessagesManager.getAll()
+      .then(messages => this.setState({
+        messages: messages
+      }));
+    ArticlesManager.getAll()
+      .then(allArticles => {
+        this.setState({
+          articles: allArticles
+        });
+      });
+  }
 
   render() {
+    console.log(this.state)
     return (
       <React.Fragment>
 
         <Route
           exact path="/" render={props => {
-            return null
+            return <ArticlesBoard {...props} articles={this.state.articles}/>
             // Remove null and return the component which will show news articles
           }}
         />
