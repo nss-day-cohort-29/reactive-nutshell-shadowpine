@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 // import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
-//import ArticlesBoard from "./articles/ArticlesBoard";
+import ArticlesBoard from "./articles/ArticlesBoard";
 //import ConnectionsBoard from "./connections/ConnectionsBoard";
 //import EventsBoard from "./events/EventsBoard";
 import MessagesBoard from "./messages/MessagesBoard";
@@ -20,14 +20,64 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-  state = {
-    articles: [],
-    messages: [],
-    connections: [],
-    events: [],
-    tasks: []
-  }
 
+state = {
+      articles: [],
+      messages: [],
+      connections: [],
+      events: [],
+      tasks: []
+    }
+
+// *********************************ARTICLES******************************************
+addArticle(articleObject){
+  ArticlesManager.post(articleObject)
+    .then(() => ArticlesManager.getAll())
+    .then(articles =>
+      this.setState({
+        articles: articles
+      })
+  );
+}
+
+deleteArticle = articleId => {
+  ArticlesManager.delete(articleId)
+    .then(() => fetch("http://localhost:5002/articles"))
+    .then(r => r.json())
+    .then(articles =>
+      this.setState({
+        articles: articles
+      })
+    );
+};
+
+// *********************************MESSAGES******************************************
+
+postNewMessage = messageObj => {
+  MessagesManager.post(messageObj)
+  .then(() => MessagesManager.getAll()
+  .then(messages => this.setState({
+    messages: messages
+  })));
+}
+
+deleteMessage = id => {
+  MessagesManager.delete(id)
+  .then(() => MessagesManager.getAll()
+  .then(messages => this.setState({
+    messages: messages
+  })));
+}
+
+editMessage = (messageObj, id) => {
+  MessagesManager.put(messageObj, id)
+  .then(() => MessagesManager.getAll()
+  .then(messages => this.setState({
+    messages: messages
+  })));
+}
+
+// *********************************TASKS******************************************
   deleteTask = id => {
     return fetch(`http://localhost:5002/tasks/${id}`, {
       method: "DELETE"
@@ -51,45 +101,24 @@ export default class ApplicationViews extends Component {
       })
     );
 
-
-    componentDidMount() {
-      sessionStorage.setItem("userId", 1);
-      TasksManager.getAll().then(allTasks => {
+  componentDidMount() {
+    sessionStorage.setItem("userId", 1);
+    ArticlesManager.getAll()
+      .then(allArticles => {
         this.setState({
-          tasks: allTasks
+          articles: allArticles
         });
       });
-
-      MessagesManager.getAll()
+    TasksManager.getAll().then(allTasks => {
+      this.setState({
+        tasks: allTasks
+      });
+    });
+    MessagesManager.getAll()
       .then(messages => this.setState({
         messages: messages
       }));
-
     }
-
-  postNewMessage = messageObj => {
-    MessagesManager.post(messageObj)
-    .then(() => MessagesManager.getAll()
-    .then(messages => this.setState({
-      messages: messages
-    })));
-  }
-
-  deleteMessage = id => {
-    MessagesManager.delete(id)
-    .then(() => MessagesManager.getAll()
-    .then(messages => this.setState({
-      messages: messages
-    })));
-  }
-
-  editMessage = (messageObj, id) => {
-    MessagesManager.put(messageObj, id)
-    .then(() => MessagesManager.getAll()
-    .then(messages => this.setState({
-      messages: messages
-    })));
-  }
 
   render() {
     return (
@@ -97,7 +126,7 @@ export default class ApplicationViews extends Component {
 
         <Route
           exact path="/" render={props => {
-            return null
+            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle}/>
             // Remove null and return the component which will show news articles
           }}
         />
