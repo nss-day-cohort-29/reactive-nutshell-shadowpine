@@ -6,28 +6,32 @@ export default class TasksForm extends Component {
 
   state = {
     tasksTitle: "",
-    details: "",
+    expectedCompletionDate: "",
+    complete: false
   };
 
 
-  handleFieldChange = evt => {
+  handleFieldChange = e => {
     const stateToChange = {};
-    console.log(evt.target.id, evt.target.value);
-    stateToChange[evt.target.id] = evt.target.value;
+    console.log(e.target.id, e.target.value);
+    stateToChange[e.target.id] = e.target.value;
     this.setState(stateToChange);
   };
 
-  constructNewTask = evt => {
-    evt.preventDefault();
-    if (this.state.details === "") {
-      window.alert("Please include some details");
+  constructNewTask = e => {
+    e.preventDefault();
+    if (this.state.details === "" && this.state.tasksTitle === "") {
+      window.alert("You must fill out both sections.");
     } else {
       const task = {
-        tasksTitle: this.state.tasks,
-        details: this.state.details,
-      }
+        tasksTitle: this.state.tasksTitle,
+        expectedCompletionDate: this.state.expectedCompletionDate,
+        complete: this.state.complete
+      };
+      console.log(this.props)
+      debugger
       this.props
-        .addTasks(task)
+        .addTask(task)
         .then(() => this.props.history.push("/tasks"));
     }
   };
@@ -37,25 +41,25 @@ export default class TasksForm extends Component {
       <React.Fragment>
         <form className="tasksForm">
           <div className="form-group">
-            <label htmlFor="taskName">Task Title</label>
+            <label htmlFor="tasksTitle">Task Title</label>
             <input
               type="text"
               required
               className="form-control"
               onChange={this.handleFieldChange}
-              id="taskName"
+              id="tasksTitle"
               placeholder="Title"
             />
           </div>
           <div className="form-group">
-            <label htmlFor="details"> Details </label>
+            <label htmlFor="expectedCompletionDate"> Estimated Completion Date </label>
             <input
-              type="text"
+              type="date"
               required
               className="form-control"
               onChange={this.handleFieldChange}
-              id="taskDetails"
-              placeholder="Details"
+              id="expectedCompletionDate"
+              placeholder="Expected Completion Date"
             />
           </div>
           <button

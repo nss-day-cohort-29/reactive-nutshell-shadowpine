@@ -10,7 +10,7 @@ export default class ArticlesBoard extends Component {
                 {/* Create title, new button, and articles container */}
                 <h1>Articles</h1>
                 <button
-                    className="article--new"
+                    className="article--new btn"
                     onClick={() => {
                         console.log("I will work someday")
                     }}>
