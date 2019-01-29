@@ -23,6 +23,7 @@ export default class MessagesCard extends Component {
         this.setState({
             showEditForm: false
         });
+        console.log("save button pressed");
         const idToEdit = event.target.parentNode.id.split("__")[1];
         this.props.editMessage(messageObj, idToEdit);
     }
