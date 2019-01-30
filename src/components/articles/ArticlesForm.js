@@ -27,41 +27,8 @@ export default class ArticlesForm extends Component {
 
         // set up timestamp and readable hour for posts
         let timestamp = new Date();
-        let hours = timestamp.getHours();
-        let minutes = timestamp.getMinutes();
-        let seconds = timestamp.getSeconds();
-        let midday = "am"
+        let date = timestamp.toLocaleString();
 
-        if (hours > 12) {
-            hours = hours - 12;
-        }
-
-        if (hours > 11){
-            midday = "pm"
-        }
-        if (minutes < 10) {
-            minutes = `0${minutes}`
-        }
-        if (seconds < 10) {
-            seconds = `0${seconds}`
-        }
-
-        let month = timestamp.getMonth() + 1;
-        let day = timestamp.getDate();
-        let year = timestamp.getFullYear();
-
-        if(day < 10) {
-            day =`0${day}`
-        }
-        if(month < 10) {
-            month = `0${month}`
-        }
-
-
-        let time = `${hours}:${minutes}:${seconds} ${midday}`
-        let mdy = `${month}/${day}/${year}`
-
-        let date = `${mdy} at ${time}`
         // create object that will POST to database with current inputs
         const article = {
             userId: 1,
@@ -76,7 +43,6 @@ export default class ArticlesForm extends Component {
             .then(() => this.props.handleChange())
     }
     render() {
-
         return (
         <React.Fragment>
             <label>

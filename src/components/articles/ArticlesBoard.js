@@ -25,7 +25,6 @@ export default class ArticlesBoard extends Component {
             return (
                 <React.Fragment>
                     <ArticlesForm addArticle={this.props.addArticle} handleChange={this.handleChange} {...this.props}/>
-
                 </React.Fragment>
             )
         } else {
@@ -40,6 +39,7 @@ export default class ArticlesBoard extends Component {
     };
 
     render(){
+        this.props.articles.sort(function(a,b){return new Date(a.timestamp) - new Date(b.timestamp)}).reverse()
         return (
             <React.Fragment>
                 {/* Create title, new button, and articles container */}
