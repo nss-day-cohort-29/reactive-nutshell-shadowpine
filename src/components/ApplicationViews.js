@@ -20,7 +20,6 @@ import TasksForm from "./tasks/TasksForm";
 
 export default class ApplicationViews extends Component {
 
-
 state = {
       articles: [],
       messages: [],
@@ -31,8 +30,8 @@ state = {
 
 
 // *********************************ARTICLES******************************************
-addArticle(articleObject){
-  ArticlesManager.post(articleObject)
+addArticle = (articleObject) => {
+  return ArticlesManager.post(articleObject)
     .then(() => ArticlesManager.getAll())
     .then(articles =>
       this.setState({
@@ -43,8 +42,7 @@ addArticle(articleObject){
 
 deleteArticle = articleId => {
   ArticlesManager.delete(articleId)
-    .then(() => fetch("http://localhost:5002/articles"))
-    .then(r => r.json())
+    .then(() => ArticlesManager.getAll())
     .then(articles =>
       this.setState({
         articles: articles
@@ -142,7 +140,7 @@ editMessage = (messageObj, id) => {
 
         <Route
           exact path="/" render={props => {
-            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle}/>
+            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle} addArticle={this.addArticle} />
             // Remove null and return the component which will show news articles
           }}
         />
