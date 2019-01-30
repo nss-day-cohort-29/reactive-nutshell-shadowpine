@@ -29,7 +29,7 @@ handleCheckChange = e => {
         <div className="card-body">
           <h4 className="card-title">
             {console.log(this.props)}
-            {this.props.task.tasksTitle}
+            {this.props.task.tasksTitle}</h4>
             <h5> Estimated Completion Date </h5>
               <h5 className="card-details">
             {this.props.task.expectedCompletionDate}
@@ -55,7 +55,6 @@ handleCheckChange = e => {
         </label>
       </form>
           </h5>
-          </h4>
         </div>
       </div>
     );
