@@ -2,7 +2,7 @@ const remoteUrl = "http://localhost:5002";
 
 export default {
     getAll() {
-        return fetch(`${remoteUrl}/articles`).then(r => r.json());
+        return fetch(`${remoteUrl}/articles?_expand=user`).then(r => r.json());
     },
     post(newArticle) {
         return fetch(`${remoteUrl}/articles`, {
