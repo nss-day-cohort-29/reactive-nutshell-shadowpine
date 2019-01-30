@@ -8,12 +8,17 @@ export default class ArticlesBoard extends Component {
     };
 
     handleChange = () => {
-        this.setState({showForm: true});
+        this.setState(state => ({showForm: !state.showForm}));
     }
 
     addForm = () => {
         if(this.state.showForm){
-            return <ArticlesForm handleChange={this.state.handleChange} props={this.state}/>
+            return (
+                <React.Fragment>
+                    <ArticlesForm addArticle={this.props.addArticle} handleChange={this.handleChange} {...this.props}/>
+
+                </React.Fragment>
+            )
         } else {
             return (
                 <button

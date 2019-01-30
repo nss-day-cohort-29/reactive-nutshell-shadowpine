@@ -1,43 +1,51 @@
 import React, { Component } from "react";
 
+
 export default class ArticlesForm extends Component {
-    state={
-        showForm: true
+    // set initial state for the form component
+    state = {
+        userId: "",
+        url: "",
+        title: "",
+        synopsis: ""
     }
 
-    handleSubmitChange = () => {
-        this.setState({showForm: false})
+    // update state whenever the input is edited
+    handleInput = (evt) => {
+        const stateToChange = {};
+        console.log(evt.target.id)
+        stateToChange[evt.target.id] = evt.target.value;
+        this.setState(stateToChange);
     }
 
-    submitForm() {
-        if(this.props.showForm === false){
-            return (
-                <button
-                    className="article--new"
-                    onClick={this.props.handleChange}>
-                    Add Article
-                </button>
-            )
-        } else {
-          return (<React.Fragment>
+    constructNewArticle = (evt) => {
+        evt.preventDefault();
+        const article = {
+            userId: 2,
+            url: this.state.url,
+            title: this.state.title,
+            synopsis: this.state.synopsis
+        };
+        this.props.addArticle(article)
+            .then(() => this.props.handleChange())
+    }
+    render() {
+        console.log(this.state)
+        return (
+        <React.Fragment>
             <label>
                 Title
-                <input />
+                <input id="title" onChange={this.handleInput}/>
             </label>
             <label>
                 Synopsis
-                <textarea></textarea>
+                <textarea id="synopsis" onChange={this.handleInput}></textarea>
             </label>
             <label>
                 URL
-                <input />
+                <input id="url" onChange={this.handleInput}/>
             </label>
-            <button onClick={this.state.handleSubmitChange}>Submit</button>
-        </React.Fragment>)
-        }
-    }
-
-    render() {
-      return this.submitForm()
-    }
+            <button onClick={this.constructNewArticle}>Submit</button>
+        </React.Fragment>
+        )}
 }

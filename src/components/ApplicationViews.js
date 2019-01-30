@@ -30,7 +30,7 @@ state = {
 
 // *********************************ARTICLES******************************************
 addArticle = (articleObject) => {
-  ArticlesManager.post(articleObject)
+  return ArticlesManager.post(articleObject)
     .then(() => ArticlesManager.getAll())
     .then(articles =>
       this.setState({
@@ -125,7 +125,7 @@ editMessage = (messageObj, id) => {
 
         <Route
           exact path="/" render={props => {
-            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle}/>
+            return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle} addArticle={this.addArticle} />
             // Remove null and return the component which will show news articles
           }}
         />
