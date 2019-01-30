@@ -41,8 +41,7 @@ addArticle = (articleObject) => {
 
 deleteArticle = articleId => {
   ArticlesManager.delete(articleId)
-    .then(() => fetch("http://localhost:5002/articles"))
-    .then(r => r.json())
+    .then(() => ArticlesManager.getAll())
     .then(articles =>
       this.setState({
         articles: articles

@@ -14,6 +14,10 @@ export default class ArticleCard extends Component {
                     <p>{this.props.article.url}<br />{this.props.article.synopsis}</p>
                     <button className={`article--${this.props.article.id}`} onClick={() => this.props.deleteArticle(this.props.article.id)}>Delete</button>
                 </div>
+                <div>
+                    <h3>Posted by {this.props.article.user.userName}</h3>
+                    <p>{this.props.article.date}</p>
+                </div>
             </div>
         )
     }

@@ -7,30 +7,50 @@ export default class ArticlesForm extends Component {
         userId: "",
         url: "",
         title: "",
-        synopsis: ""
+        synopsis: "",
+        timestamp: "",
+        date: ""
     }
 
     // update state whenever the input is edited
     handleInput = (evt) => {
         const stateToChange = {};
-        console.log(evt.target.id)
         stateToChange[evt.target.id] = evt.target.value;
         this.setState(stateToChange);
     }
 
     constructNewArticle = (evt) => {
         evt.preventDefault();
+
+        // set up timestamp and readable hour for posts
+        let timestamp = new Date();
+        let hours = timestamp.getHours();
+        let minutes = timestamp.getMinutes();
+        let seconds = timestamp.getSeconds();
+        let midday = "am"
+
+        if (hours > 12) {
+            hours = hours - 12;
+            midday = "pm"
+        }
+
+        let time = `${hours}:${minutes}:${seconds} ${midday}`
+
+        // create object that will POST to database with current inputs
         const article = {
-            userId: 2,
+            userId: 1,
             url: this.state.url,
             title: this.state.title,
-            synopsis: this.state.synopsis
+            synopsis: this.state.synopsis,
+            timestamp: timestamp,
+            date: time
+
         };
         this.props.addArticle(article)
             .then(() => this.props.handleChange())
     }
     render() {
-        console.log(this.state)
+
         return (
         <React.Fragment>
             <label>
