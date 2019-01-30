@@ -102,6 +102,19 @@ editMessage = (messageObj, id) => {
     );
     }
 
+    addCheckChange = (changedObj, id) => {
+      console.log(id);
+      return TasksManager.patch(changedObj, id)
+      .then(() => TasksManager.getAll()
+      .then(response =>
+       this.setState({
+         tasks: response
+        })
+      )
+       )
+    }
+
+
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
@@ -157,6 +170,7 @@ editMessage = (messageObj, id) => {
                 {...props}
                 deleteTask={this.deleteTask}
                 tasks={this.state.tasks}
+                addCheckChange={this.addCheckChange}
               />
             );
           }}

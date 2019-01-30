@@ -29,7 +29,6 @@ export default class TasksForm extends Component {
         complete: this.state.complete
       };
       console.log(this.props)
-      debugger
       this.props
         .addTask(task)
         .then(() => this.props.history.push("/tasks"));
@@ -70,6 +69,7 @@ export default class TasksForm extends Component {
             Create New
           </button>
         </form>
+
       </React.Fragment>
     );
   }
