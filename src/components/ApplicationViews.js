@@ -13,6 +13,7 @@ import ArticlesManager from "../modules/ArticlesManager";
 import MessagesManager from "../modules/MessagesManager";
 //import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
+import UsersManager from "../modules/UsersManager";
 // import ArticlesForm from "./tasks/ArticlesForm";
 // import ConnectionsForm from "./tasks/ConnectionsForm";
 // import EventsForm from "./tasks/EventsForm";
@@ -26,7 +27,8 @@ state = {
       messages: [],
       connections: [],
       events: [],
-      tasks: []
+      tasks: [],
+      users: []
     };
 
 
@@ -121,6 +123,10 @@ editMessage = (messageObj, id) => {
       .then(messages => this.setState({
         messages: messages
       }));
+    UsersManager.getAll()
+      .then(users => this.setState({
+        users: users
+      }));
     }
 
   render() {
@@ -147,7 +153,8 @@ editMessage = (messageObj, id) => {
               postNewMessage={this.postNewMessage}
               deleteMessage={this.deleteMessage}
               editMessage={this.editMessage}
-              messages={this.state.messages} />
+              messages={this.state.messages}
+              users={this.state.users} />
           }}
         />
 
