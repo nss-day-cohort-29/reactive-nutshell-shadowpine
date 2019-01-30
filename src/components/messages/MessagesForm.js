@@ -65,15 +65,16 @@ export default class MessagesForm extends Component {
         const newObject = {
             content: this.state.newMessage,
             userId: 1,
-            timeStamp: dateTime,
-            readableTime: readableTime
+            timeStamp: readableTime
         }
         this.props.postNewMessage(newObject);
     }
     render() {
         return(
             <form className="messageForm">
+                <label htmlFor="messageInput">Enter New Message:</label>
                 <input type="text"
+                name="messageInput"
                 id="messageInput"
                 className="messageForm__input"
                 onChange={this.handlefieldChange}

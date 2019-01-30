@@ -9,13 +9,15 @@ export default class MessagesBoard extends Component {
         return (
             <React.Fragment>
                 <section className="messagesContainer">
-                    {
-                        this.props.messages.map(message => {
-                            return <MessagesCard {...this.props} message={message} />
-                        })
-                    }
+                    <section className="messagesFeed">
+                        {
+                            this.props.messages.map(message => {
+                                return <MessagesCard key={message.id} {...this.props} message={message} />
+                            })
+                        }
+                    </section>
+                    <MessagesForm {...this.props} />
                 </section>
-                <MessagesForm {...this.props} />
             </React.Fragment>
         )
     }
