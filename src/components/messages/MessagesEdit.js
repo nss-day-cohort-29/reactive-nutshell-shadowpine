@@ -29,7 +29,7 @@ export default class MessagesForm extends Component {
         return (
             <form className="messagesContainer__messageEdit" id={`messageEdit__${this.props.message.id}`}>
                 <label />
-                <input type="text" onChange={this.handlefieldChange} />
+                <input type="text" onChange={this.handlefieldChange} value={this.props.message.content} />
                 <button onClick={this.createEditObject}>Save</button>
             </form>
         )
