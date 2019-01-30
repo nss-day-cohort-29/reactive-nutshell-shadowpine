@@ -26,7 +26,8 @@ state = {
       connections: [],
       events: [],
       tasks: []
-    }
+    };
+
 
 // *********************************ARTICLES******************************************
 addArticle = (articleObject) => {
@@ -75,6 +76,7 @@ editMessage = (messageObj, id) => {
   })));
 }
 
+
 // *********************************TASKS******************************************
   deleteTask = id => {
     return fetch(`http://localhost:5002/tasks/${id}`, {
@@ -90,14 +92,15 @@ editMessage = (messageObj, id) => {
       );
   };
 
-  addTask = task =>
-  TasksManager.post(task)
+  addTask = task =>{
+  return TasksManager.post(task)
     .then(() => TasksManager.getAll())
     .then(tasks =>
       this.setState({
         tasks: tasks
       })
     );
+    }
 
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
@@ -147,7 +150,8 @@ editMessage = (messageObj, id) => {
         />
 
         <Route
-          path="/tasks" render={props => {
+          path="/tasks"
+          render={props => {
             return (
               <TasksBoard
                 {...props}
@@ -168,7 +172,6 @@ editMessage = (messageObj, id) => {
             );
           }}
         />
-
       </React.Fragment>
     );
   }
