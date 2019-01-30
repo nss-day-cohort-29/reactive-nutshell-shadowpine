@@ -12,6 +12,12 @@ export default class ArticlesBoard extends Component {
 
     handleChange = () => {
         this.setState(state => ({showForm: !state.showForm}));
+    };
+
+    sortArticles = () => {
+        this.props.articles.sort(function(a, b){
+            return new Date(a.date) - new Date(b.date);
+        })
     }
 
     addForm = () => {
@@ -31,7 +37,7 @@ export default class ArticlesBoard extends Component {
                 </button>
             )
         }
-    }
+    };
 
     render(){
         return (
