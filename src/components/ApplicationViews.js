@@ -13,6 +13,7 @@ import ArticlesManager from "../modules/ArticlesManager";
 import MessagesManager from "../modules/MessagesManager";
 //import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
+import UsersManager from "../modules/UsersManager";
 // import ArticlesForm from "./tasks/ArticlesForm";
 // import ConnectionsForm from "./tasks/ConnectionsForm";
 // import EventsForm from "./tasks/EventsForm";
@@ -25,7 +26,8 @@ state = {
       messages: [],
       connections: [],
       events: [],
-      tasks: []
+      tasks: [],
+      users: []
     };
 
 
@@ -102,6 +104,19 @@ editMessage = (messageObj, id) => {
     );
     }
 
+    addCheckChange = (changedObj, id) => {
+      console.log(id);
+      return TasksManager.patch(changedObj, id)
+      .then(() => TasksManager.getAll()
+      .then(response =>
+       this.setState({
+         tasks: response
+        })
+      )
+       )
+    }
+
+
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
@@ -118,6 +133,10 @@ editMessage = (messageObj, id) => {
     MessagesManager.getAll()
       .then(messages => this.setState({
         messages: messages
+      }));
+    UsersManager.getAll()
+      .then(users => this.setState({
+        users: users
       }));
     }
 
@@ -144,8 +163,9 @@ editMessage = (messageObj, id) => {
             return <MessagesBoard {...props}
               postNewMessage={this.postNewMessage}
               deleteMessage={this.deleteMessage}
-              editMessage={this.deleteMessage}
-              messages={this.state.messages} />
+              editMessage={this.editMessage}
+              messages={this.state.messages}
+              users={this.state.users} />
           }}
         />
 
@@ -157,6 +177,7 @@ editMessage = (messageObj, id) => {
                 {...props}
                 deleteTask={this.deleteTask}
                 tasks={this.state.tasks}
+                addCheckChange={this.addCheckChange}
               />
             );
           }}
