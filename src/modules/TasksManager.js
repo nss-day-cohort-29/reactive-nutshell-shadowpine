@@ -16,5 +16,15 @@ export default {
       },
       body: JSON.stringify(newTask)
     }).then(data => data.json());
+  },
+  patch (changes, id){
+    return fetch (`${remoteURL}/tasks/${id}`,{
+      method: "PATCH",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(changes)
+    })
   }
+
 };

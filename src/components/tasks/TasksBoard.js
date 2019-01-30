@@ -6,6 +6,11 @@ export default class TasksBoard extends Component {
   render() {
     return (
       <React.Fragment>
+      <section className="tasks">
+          {this.props.tasks.map(task => (
+            <TasksCard key={task.id} task={task} {...this.props} />
+          ))}
+        </section>
         <div className="taskButton">
           <button
             type="button"
@@ -17,11 +22,7 @@ export default class TasksBoard extends Component {
             Create New Task
           </button>
         </div>
-        <section className="tasks">
-          {this.props.tasks.map(task => (
-            <TasksCard key={task.id} task={task} {...this.props} />
-          ))}
-        </section>
+
       </React.Fragment>
     );
   }
