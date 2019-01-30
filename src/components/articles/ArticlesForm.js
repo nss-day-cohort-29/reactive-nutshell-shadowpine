@@ -1,3 +1,6 @@
+// this file provides the structure for the article form and handles the input
+// Author: Brittany Ramos-Janeway
+
 import React, { Component } from "react";
 
 
@@ -31,11 +34,34 @@ export default class ArticlesForm extends Component {
 
         if (hours > 12) {
             hours = hours - 12;
-            midday = "pm"
         }
 
-        let time = `${hours}:${minutes}:${seconds} ${midday}`
+        if (hours > 11){
+            midday = "pm"
+        }
+        if (minutes < 10) {
+            minutes = `0${minutes}`
+        }
+        if (seconds < 10) {
+            seconds = `0${seconds}`
+        }
 
+        let month = timestamp.getMonth() + 1;
+        let day = timestamp.getDate();
+        let year = timestamp.getFullYear();
+
+        if(day < 10) {
+            day =`0${day}`
+        }
+        if(month < 10) {
+            month = `0${month}`
+        }
+
+
+        let time = `${hours}:${minutes}:${seconds} ${midday}`
+        let mdy = `${month}/${day}/${year}`
+
+        let date = `${mdy} at ${time}`
         // create object that will POST to database with current inputs
         const article = {
             userId: 1,
@@ -43,7 +69,7 @@ export default class ArticlesForm extends Component {
             title: this.state.title,
             synopsis: this.state.synopsis,
             timestamp: timestamp,
-            date: time
+            date: date
 
         };
         this.props.addArticle(article)

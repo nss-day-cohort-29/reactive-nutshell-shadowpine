@@ -38,7 +38,7 @@ addArticle = (articleObject) => {
         articles: articles
       })
   );
-}
+};
 
 deleteArticle = articleId => {
   ArticlesManager.delete(articleId)

@@ -1,3 +1,6 @@
+// this file sorts through the existing articles and adds them to the DOM
+// Author: Brittany Ramos-Janeway
+
 import React, { Component } from "react";
 import ArticlesCard from "./ArticlesCard"
 import ArticlesForm from "./ArticlesForm"
