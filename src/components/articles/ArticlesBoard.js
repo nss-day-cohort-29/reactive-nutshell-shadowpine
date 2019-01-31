@@ -14,12 +14,6 @@ export default class ArticlesBoard extends Component {
         this.setState(state => ({showForm: !state.showForm}));
     };
 
-    sortArticles = () => {
-        this.props.articles.sort(function(a, b){
-            return new Date(a.date) - new Date(b.date);
-        })
-    };
-
     addForm = () => {
         if(this.state.showForm){
             return (
@@ -38,10 +32,10 @@ export default class ArticlesBoard extends Component {
         }
     };
 
-    checkUser = (sessionUserId, articleId) => {
+    checkUser = (sessionUserId, articleUserId) => {
         let sameUser = false;
 
-        if(sessionUserId === articleId){
+        if(sessionUserId === articleUserId){
             sameUser = true;
         }
         return sameUser;
@@ -59,7 +53,7 @@ export default class ArticlesBoard extends Component {
                 <section className="articles">
                     {/* add each article to the DOM */}
                     {this.props.articles.map(article => {
-                        let user = this.checkUser();
+                        let user = this.checkUser(sessionUserId, article.user.id);
                         if(user){
                             return <ArticlesCard key={article.id} article={article} deleteArticle={this.props.deleteArticle} {...this.props} />
                         }

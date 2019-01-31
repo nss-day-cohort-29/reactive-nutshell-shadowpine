@@ -5,13 +5,13 @@ import React, { Component } from "react";
 import TasksBoard from "./tasks/TasksBoard";
 import ArticlesBoard from "./articles/ArticlesBoard";
 //import ConnectionsBoard from "./connections/ConnectionsBoard";
-//import EventsBoard from "./events/EventsBoard";
+import EventsBoard from "./events/EventsBoard";
 import MessagesBoard from "./messages/MessagesBoard";
 import TasksManager from "../modules/TasksManager";
 import ArticlesManager from "../modules/ArticlesManager";
 //import ConnectionsManager from "../modules/ConnectionsManager";
 import MessagesManager from "../modules/MessagesManager";
-//import EventsManager from "../modules/EventsManager";
+import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
 import UsersManager from "../modules/UsersManager";
 // import ArticlesForm from "./tasks/ArticlesForm";
@@ -38,8 +38,8 @@ addArticle = (articleObject) => {
     .then(articles =>{
       this.setState({
         articles: articles
-      })
-    })
+      });
+    });
 };
 
 deleteArticle = articleId => {
@@ -50,6 +50,36 @@ deleteArticle = articleId => {
         articles: articles
       })
     );
+};
+
+
+// *********************************EVENTS******************************************
+addEvent = (eventObject) => {
+  return EventsManager.post(eventObject)
+    .then(() => EventsManager.getAll())
+    .then(events => {
+      this.setState({
+        events: events
+      });
+    });
+};
+
+deleteEvent = eventId => {
+  EventsManager.delete(eventId)
+    .then(() => EventsManager.getAll())
+    .then(events =>
+      this.setState({
+        events: events
+      }));
+};
+
+editEvent = (eventId, eventObject) => {
+  EventsManager.put(eventId, eventObject)
+    .then(() => EventsManager.getAll())
+    .then(events =>
+      this.setState({
+        events: events
+      }));
 };
 
 // *********************************MESSAGES******************************************
@@ -121,13 +151,14 @@ editMessage = (messageObj, id) => {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
       .then(allArticles => {
-        console.log(allArticles)
-        allArticles.sort(function(a, b){
-        return Date(a.timestamp) - Date(b.timestamp);
-      })
-        console.log(allArticles)
         this.setState({
           articles: allArticles
+        });
+      });
+    EventsManager.getAll()
+      .then(allEvents => {
+        this.setState({
+          events: allEvents
         });
       });
     TasksManager.getAll().then(allTasks => {
@@ -153,6 +184,12 @@ editMessage = (messageObj, id) => {
           exact path="/" render={props => {
             return <ArticlesBoard {...props} articles={this.state.articles} deleteArticle={this.deleteArticle} addArticle={this.addArticle} />
             // Remove null and return the component which will show news articles
+          }}
+        />
+
+        <Route
+          exact path="/events" render={props => {
+            return <EventsBoard {...props} events={this.state.events} deleteEvent={this.deleteEvent} addEvent={this.addEvent} editEvent={this.editEvent} />
           }}
         />
 
