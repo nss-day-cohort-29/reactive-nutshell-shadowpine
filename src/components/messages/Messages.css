@@ -8,6 +8,8 @@
     display: flex;
     flex-direction: column;
     width: 50%;
+    overflow-y: scroll;
+    height: 90vh;
 }
 
 .messagesContainer__messageItem--currentUser {
@@ -15,6 +17,7 @@
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid black;
+    min-height: 12em;
 }
 
 .messagesContainer__messageItem--otherUser {
@@ -22,5 +25,18 @@
     flex-direction: column;
     align-items: flex-end;
     border: 1px solid black;
+    min-height: 8em
+}
+
+.friendAddModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid black;
+    background-color: white;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
 }
 
