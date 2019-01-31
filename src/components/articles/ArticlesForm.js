@@ -1,3 +1,6 @@
+// this file provides the structure for the article form and handles the input
+// Author: Brittany Ramos-Janeway
+
 import React, { Component } from "react";
 
 
@@ -24,17 +27,7 @@ export default class ArticlesForm extends Component {
 
         // set up timestamp and readable hour for posts
         let timestamp = new Date();
-        let hours = timestamp.getHours();
-        let minutes = timestamp.getMinutes();
-        let seconds = timestamp.getSeconds();
-        let midday = "am"
-
-        if (hours > 12) {
-            hours = hours - 12;
-            midday = "pm"
-        }
-
-        let time = `${hours}:${minutes}:${seconds} ${midday}`
+        let date = timestamp.toLocaleString();
 
         // create object that will POST to database with current inputs
         const article = {
@@ -43,14 +36,13 @@ export default class ArticlesForm extends Component {
             title: this.state.title,
             synopsis: this.state.synopsis,
             timestamp: timestamp,
-            date: time
+            date: date
 
         };
         this.props.addArticle(article)
             .then(() => this.props.handleChange())
     }
     render() {
-
         return (
         <React.Fragment>
             <label>

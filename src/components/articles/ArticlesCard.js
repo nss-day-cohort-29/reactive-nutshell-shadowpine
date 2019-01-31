@@ -1,3 +1,6 @@
+// this fild adds the specific data from the database to the card that holds information for each specific article
+// Author: Brittany Ramos-Janeway
+
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
 

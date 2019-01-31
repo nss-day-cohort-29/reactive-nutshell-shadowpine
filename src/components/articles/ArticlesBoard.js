@@ -1,3 +1,6 @@
+// this file sorts through the existing articles and adds them to the DOM
+// Author: Brittany Ramos-Janeway
+
 import React, { Component } from "react";
 import ArticlesCard from "./ArticlesCard"
 import ArticlesForm from "./ArticlesForm"
@@ -9,6 +12,12 @@ export default class ArticlesBoard extends Component {
 
     handleChange = () => {
         this.setState(state => ({showForm: !state.showForm}));
+    };
+
+    sortArticles = () => {
+        this.props.articles.sort(function(a, b){
+            return new Date(a.date) - new Date(b.date);
+        })
     }
 
     addForm = () => {
@@ -16,7 +25,6 @@ export default class ArticlesBoard extends Component {
             return (
                 <React.Fragment>
                     <ArticlesForm addArticle={this.props.addArticle} handleChange={this.handleChange} {...this.props}/>
-
                 </React.Fragment>
             )
         } else {
@@ -28,9 +36,10 @@ export default class ArticlesBoard extends Component {
                 </button>
             )
         }
-    }
+    };
 
     render(){
+        this.props.articles.sort(function(a,b){return new Date(a.timestamp) - new Date(b.timestamp)}).reverse()
         return (
             <React.Fragment>
                 {/* Create title, new button, and articles container */}
