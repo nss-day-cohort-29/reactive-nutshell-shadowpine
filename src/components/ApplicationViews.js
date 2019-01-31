@@ -14,9 +14,10 @@ import MessagesManager from "../modules/MessagesManager";
 //import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
 import UsersManager from "../modules/UsersManager";
-// import ArticlesForm from "./tasks/ArticlesForm";
-// import ConnectionsForm from "./tasks/ConnectionsForm";
-// import EventsForm from "./tasks/EventsForm";
+// import ArticlesForm from "./articles/ArticlesForm";
+// import ConnectionsForm from "./connections/ConnectionsForm";
+// import EventsForm from "./events/EventsForm";
+ import EditTasksForm from "./tasks/TasksEdit";
 
 
 export default class ApplicationViews extends Component {
@@ -116,6 +117,16 @@ editMessage = (messageObj, id) => {
        )
     }
 
+    updateTasks = (taskId, editedObj) => {
+      return TasksManager.put(taskId, editedObj)
+      .then(() => TasksManager.getAll())
+      .then(tasks => {
+        this.setState({
+          tasks: tasks
+        })
+      });
+    }
+
 
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
@@ -191,6 +202,11 @@ editMessage = (messageObj, id) => {
                 addTask={this.addTask}
               />
             );
+          }}
+        />
+        <Route
+          path="/tasks/:taskId(\d+)/edit" render={props => {
+            return <EditTasksForm {...props} updateTasks={this.updateTasks}/>
           }}
         />
       </React.Fragment>

@@ -30,18 +30,27 @@ handleCheckChange = e => {
           <h4 className="card-title">
             {console.log(this.props)}
             {this.props.task.tasksTitle}</h4>
-            <h5> Estimated Completion Date </h5>
               <h5 className="card-details">
-            {this.props.task.expectedCompletionDate}
+           Estimated Date of Completion:  {this.props.task.expectedCompletionDate}
             <Link className="nav-link" to={`/tasks/${this.props.task.id}`}>
             </Link>
-            <a
-              href="#"
+            <button
               onClick={() => this.props.deleteTask(this.props.task.id)}
-              className="card-link"
+              className="card-link btn btn-danger"
             >
               Remove Task
-            </a>
+            </button>
+            <button
+            type="button"
+            className="btn btn-warning"
+            onClick={() => {
+              console.log(this.props.task.id)
+              {!!/* I need to redirect based on the object id from here this is tied into application view. */!!}
+              this.props.task.id("/tasks/${this.props.task.id}/edit");
+            }}
+          >
+            Edit Current Task
+          </button>
             <form>
         <label>
           Completed

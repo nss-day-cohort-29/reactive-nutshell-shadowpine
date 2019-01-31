@@ -1,30 +1,34 @@
 import React, { Component } from "react";
 
-export default class TasksForm extends Component {
+export default class EditTasksForm extends Component {
     state = {
         tasksToEdit: ""
     }
+
+    //This part takes the individual changes and set state based on input.
 
     handlefieldChange = event => {
         const stateToChange = {};
         stateToChange.editedContent = event.target.value;
         this.setState(stateToChange);
     }
+    //This takes all of those little inputs them and passes them up to the app views.
 
     createEditObject = event => {
         const editedTasks = {
             id: this.props.tasks.id,
             "tasksTitle":this.props.tasks.tasksTitle ,
-            "expectedCompletionDate":this.props.tasks.expectedCompletionDate ,
+            "expectedCompletionDate":this.props.tasks.expectedCompletionDate,
             "complete": this.props.tasks.complete
         };
         console.log(editedTasks);
-        this.props.handleSaveButton(editedTasks, event);
+        this.props.updateTasks(editedTasks, event);
     }
 
 
+
     render() {
-        render() {
+
             return (
               <React.Fragment>
                 <form className="editTasksForm">
@@ -52,10 +56,10 @@ export default class TasksForm extends Component {
                   </div>
                   <button
                     type="submit"
-                    onClick={this.constructNewTask}
+                    onClick={this.createEditObject}
                     className="btn btn-primary"
                   >
-                    Create New
+                    Resubmit
                   </button>
                 </form>
 
@@ -66,4 +70,3 @@ export default class TasksForm extends Component {
 
 
 
-}
