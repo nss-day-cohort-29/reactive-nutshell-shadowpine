@@ -1,5 +1,5 @@
 /* eslint-disable no-dupe-class-members */
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import React, { Component } from "react";
 // import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
