@@ -12,14 +12,14 @@ export default class EditTasksForm extends Component {
     handleFieldChange = event => {
         const stateToChange = {};
         stateToChange[event.target.id] = event.target.value;
-        console.log(stateToChange);
+        //console.log(stateToChange);
         this.setState(stateToChange);
     }
     //This takes all of those little inputs them and passes them up to the app views.
 
     createEditObject = evt => {
-        let completeObj = this.props.tasks.filter( task =>{
-            if (task.id === this.props.match.params.taskId)
+        let completeObj = this.props.tasks.filter( task => {
+           if (task.id === this.props.match.params.taskId)
             {
                 return this.props.tasks.complete;
             }
@@ -31,9 +31,9 @@ export default class EditTasksForm extends Component {
             id: this.props.match.params.taskId,
             complete: completeObj
         };
-        console.log(editedTasks);
-        console.log(this.state)
-        console.log("props", this.props)
+        // console.log(editedTasks);
+        // console.log(this.state)
+        // console.log("props", this.props)
         this.props
         .updateTasks(this.props.match.params.taskId, editedTasks)
         .then(() => this.props.history.push("/tasks"))
@@ -47,7 +47,7 @@ export default class EditTasksForm extends Component {
             editTasksTitle: task.tasksTitle,
             editedExpectedCompletionDate: task.expectedCompletionDate
           });
-          console.log(this.state)
+         // console.log(this.state)
         });
       }
 
