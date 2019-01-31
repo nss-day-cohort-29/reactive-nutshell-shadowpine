@@ -25,6 +25,16 @@ export default {
       },
       body: JSON.stringify(changes)
     })
+  },
+  put (id, changes){
+    console.log(changes, id)
+    return fetch (`${remoteURL}/tasks/${id}`,{
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(changes)
+    })
   }
 
 };

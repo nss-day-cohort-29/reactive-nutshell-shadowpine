@@ -4,7 +4,6 @@ import React, { Component } from "react";
 // import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
 import ArticlesBoard from "./articles/ArticlesBoard";
-//import ConnectionsBoard from "./connections/ConnectionsBoard";
 import EventsBoard from "./events/EventsBoard";
 import MessagesBoard from "./messages/MessagesBoard";
 import TasksManager from "../modules/TasksManager";
@@ -14,9 +13,7 @@ import MessagesManager from "../modules/MessagesManager";
 import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
 import UsersManager from "../modules/UsersManager";
-// import ArticlesForm from "./tasks/ArticlesForm";
-// import ConnectionsForm from "./tasks/ConnectionsForm";
-// import EventsForm from "./tasks/EventsForm";
+ import EditTasksForm from "./tasks/TasksEdit";
 
 
 export default class ApplicationViews extends Component {
@@ -101,7 +98,7 @@ deleteMessage = id => {
 }
 
 editMessage = (messageObj, id) => {
-  MessagesManager.put(messageObj, id)
+  MessagesManager.patchEdit(messageObj, id)
   .then(() => MessagesManager.getAll()
   .then(messages => this.setState({
     messages: messages
@@ -154,6 +151,19 @@ postNewConnection = connectionObj => {
       )
        )
     }
+
+    updateTasks = (taskId, editedObj) => {
+      debugger
+      console.log(taskId, editedObj )
+      return TasksManager.put(taskId, editedObj)
+      .then(() => TasksManager.getAll())
+      .then(tasks => {
+        this.setState({
+          tasks: tasks
+        })
+      });
+    }
+
 
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
@@ -247,6 +257,13 @@ postNewConnection = connectionObj => {
                 addTask={this.addTask}
               />
             );
+          }}
+        />
+        <Route
+          path="/tasks/:taskId(\d+)/edit" render={props => {
+            return <EditTasksForm {...props} updateTasks={this.updateTasks}
+                    tasks = {this.state.tasks}
+                     />
           }}
         />
       </React.Fragment>
