@@ -36,12 +36,12 @@ state = {
 addArticle = (articleObject) => {
   return ArticlesManager.post(articleObject)
     .then(() => ArticlesManager.getAll())
-    .then(articles =>
+    .then(articles =>{
       this.setState({
         articles: articles
       })
-  );
-}
+    })
+};
 
 deleteArticle = articleId => {
   ArticlesManager.delete(articleId)
@@ -72,7 +72,7 @@ deleteMessage = id => {
 }
 
 editMessage = (messageObj, id) => {
-  MessagesManager.put(messageObj, id)
+  MessagesManager.patchEdit(messageObj, id)
   .then(() => MessagesManager.getAll()
   .then(messages => this.setState({
     messages: messages
@@ -118,6 +118,8 @@ editMessage = (messageObj, id) => {
     }
 
     updateTasks = (taskId, editedObj) => {
+      debugger
+      console.log(taskId, editedObj )
       return TasksManager.put(taskId, editedObj)
       .then(() => TasksManager.getAll())
       .then(tasks => {
@@ -132,6 +134,11 @@ editMessage = (messageObj, id) => {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
       .then(allArticles => {
+        console.log(allArticles)
+        allArticles.sort(function(a, b){
+        return Date(a.timestamp) - Date(b.timestamp);
+      })
+        console.log(allArticles)
         this.setState({
           articles: allArticles
         });
@@ -206,7 +213,9 @@ editMessage = (messageObj, id) => {
         />
         <Route
           path="/tasks/:taskId(\d+)/edit" render={props => {
-            return <EditTasksForm {...props} updateTasks={this.updateTasks}/>
+            return <EditTasksForm {...props} updateTasks={this.updateTasks}
+                    tasks = {this.state.tasks}
+                     />
           }}
         />
       </React.Fragment>

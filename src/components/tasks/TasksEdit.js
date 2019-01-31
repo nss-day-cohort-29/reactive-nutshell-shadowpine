@@ -1,29 +1,55 @@
 import React, { Component } from "react";
+import TasksManager from "../../modules/TasksManager";
 
 export default class EditTasksForm extends Component {
     state = {
-        tasksToEdit: ""
+        editTasksTitle: "",
+        editedExpectedCompletionDate: ""
     }
 
     //This part takes the individual changes and set state based on input.
 
-    handlefieldChange = event => {
+    handleFieldChange = event => {
         const stateToChange = {};
-        stateToChange.editedContent = event.target.value;
+        stateToChange[event.target.id] = event.target.value;
+        console.log(stateToChange);
         this.setState(stateToChange);
     }
     //This takes all of those little inputs them and passes them up to the app views.
 
-    createEditObject = event => {
+    createEditObject = evt => {
+        let completeObj = this.props.tasks.filter( task =>{
+            if (task.id === this.props.match.params.taskId)
+            {
+                return this.props.tasks.complete;
+            }
+        })
+
         const editedTasks = {
-            id: this.props.tasks.id,
-            "tasksTitle":this.props.tasks.tasksTitle ,
-            "expectedCompletionDate":this.props.tasks.expectedCompletionDate,
-            "complete": this.props.tasks.complete
+            tasksTitle:this.state.editTasksTitle,
+            expectedCompletionDate:this.state.editedExpectedCompletionDate,
+            id: this.props.match.params.taskId,
+            complete: completeObj
         };
         console.log(editedTasks);
-        this.props.updateTasks(editedTasks, event);
+        console.log(this.state)
+        console.log("props", this.props)
+        this.props
+        .updateTasks(this.props.match.params.taskId, editedTasks)
+        .then(() => this.props.history.push("/tasks"))
     }
+
+    componentDidMount() {
+        console.log(this.props)
+       TasksManager.get(this.props.match.params.taskId)
+        .then(task => {
+          this.setState({
+            editTasksTitle: task.tasksTitle,
+            editedExpectedCompletionDate: task.expectedCompletionDate
+          });
+          console.log(this.state)
+        });
+      }
 
 
 
@@ -33,7 +59,7 @@ export default class EditTasksForm extends Component {
               <React.Fragment>
                 <form className="editTasksForm">
                   <div className="form-group">
-                    <label htmlFor="editTasksTitle">Task Title</label>
+                    <label htmlFor="editTasksTitle">Edit Task Title</label>
                     <input
                       type="text"
                       required
@@ -44,7 +70,7 @@ export default class EditTasksForm extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="editeddExpectedCompletionDate"> Estimated Completion Date </label>
+                    <label htmlFor="editedExpectedCompletionDate"> Edit Estimated Completion Date </label>
                     <input
                       type="date"
                       required
@@ -62,7 +88,6 @@ export default class EditTasksForm extends Component {
                     Resubmit
                   </button>
                 </form>
-
               </React.Fragment>
             );
           }

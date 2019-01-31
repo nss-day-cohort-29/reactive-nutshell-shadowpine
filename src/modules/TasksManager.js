@@ -26,7 +26,8 @@ export default {
       body: JSON.stringify(changes)
     })
   },
-  put (changes, id){
+  put (id, changes){
+    console.log(changes, id)
     return fetch (`${remoteURL}/tasks/${id}`,{
       method: "PUT",
       headers: {
