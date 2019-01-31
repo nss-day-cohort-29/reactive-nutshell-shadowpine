@@ -2,12 +2,20 @@
 // Author: Brittany Ramos-Janeway
 
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+
 
 export default class ArticleCard extends Component {
+    checkUser = (sessionUserId, articleId) => {
+        let sameUser = false;
+
+        if(sessionUserId === articleId){
+            sameUser = true;
+        }
+        return sameUser;
+    }
     render() {
-        let sessionUser = sessionStorage.getItem("User");
-        let sessionUserId = Number(sessionUser.id)
+        let sessionUser = sessionStorage.getItem("userId");
+        let sessionUserId = Number(sessionUser);
         return (
             // create container for each individual article with title, corresponding delete button and article synopsis
             <div key={this.props.article.id} className="card">
