@@ -24,7 +24,7 @@ export default class ArticlesBoard extends Component {
         } else {
             return (
                 <button
-                    className="article--new"
+                    className="article--new btn btn-success"
                     onClick={this.handleChange}>
                     Add Article
                 </button>
