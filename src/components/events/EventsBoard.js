@@ -21,7 +21,7 @@ export default class EventsBoard extends Component {
         } else {
             return (
                 <button
-                    className="event--new"
+                    className="event--new btn btn-success"
                     onClick={this.handleChange}>
                     Add Event
                 </button>

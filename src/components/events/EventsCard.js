@@ -23,12 +23,12 @@ export default class EventsCard extends Component {
                             {this.props.event.title}
                         </h4>
                         <p>{this.props.event.eventDate}<br />{this.props.event.location}</p>
-                        <button className={`event--${this.props.event.id}`} onClick={() => this.props.deleteEvent(this.props.event.id)}>Delete</button>
+                        <button type="button" className={`event--${this.props.event.id} btn btn-warning`} onClick={() => this.props.deleteEvent(this.props.event.id)}>Delete</button><button id={this.props.event.id} className="btn btn-info" onClick={this.handleChange}>Edit Event</button>
                     </div>
                     <div className="card-body">
                         <h5>Posted by {this.props.event.user.userName}</h5>
                         <p>{this.props.event.postDate}</p>
-                        <button id={this.props.event.id} onClick={this.handleChange}>Edit Event</button>
+
                     </div>
                 </React.Fragment>
             )}
