@@ -14,12 +14,6 @@ export default class ArticlesBoard extends Component {
         this.setState(state => ({showForm: !state.showForm}));
     };
 
-    sortArticles = () => {
-        this.props.articles.sort(function(a, b){
-            return new Date(a.date) - new Date(b.date);
-        })
-    }
-
     addForm = () => {
         if(this.state.showForm){
             return (
@@ -38,7 +32,18 @@ export default class ArticlesBoard extends Component {
         }
     };
 
+    checkUser = (sessionUserId, articleUserId) => {
+        let sameUser = false;
+
+        if(sessionUserId === articleUserId){
+            sameUser = true;
+        }
+        return sameUser;
+    };
+
     render(){
+        let sessionUser = sessionStorage.getItem("userId");
+        let sessionUserId = Number(sessionUser);
         this.props.articles.sort(function(a,b){return new Date(a.timestamp) - new Date(b.timestamp)}).reverse()
         return (
             <React.Fragment>
@@ -47,9 +52,12 @@ export default class ArticlesBoard extends Component {
                 {this.addForm()}
                 <section className="articles">
                     {/* add each article to the DOM */}
-                    {this.props.articles.map(article => (
-                        <ArticlesCard key={article.id} article={article} deleteArticle={this.props.deleteArticle} {...this.props} />
-                    ))}
+                    {this.props.articles.map(article => {
+                        let user = this.checkUser(sessionUserId, article.user.id);
+                        if(user){
+                            return <ArticlesCard key={article.id} article={article} deleteArticle={this.props.deleteArticle} {...this.props} />
+                        }
+                    })}
                 </section>
             </React.Fragment>
         )}
