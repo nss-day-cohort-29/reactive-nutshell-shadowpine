@@ -1,4 +1,4 @@
-// Author: Cole Bryant. Purpose: Renders the modal which enables the user to add the userName clicked as a friend
+// Author: Cole Bryant. Purpose: Renders the modal which enables the user to add the user whose userName was clicked as a friend
 
 import React, { Component } from "react";
 import "./Messages.css";

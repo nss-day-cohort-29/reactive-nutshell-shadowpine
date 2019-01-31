@@ -1,6 +1,7 @@
 // Author: Cole Bryant. Purpose: This component renders each of the message "cards" conditionally. If the user who posted the message
 // is the current user, this component also adds functionality for the edit and delete buttons. Finally, this component also
-// routes to the MessagesEdit component once the edit button is pressed
+// routes to the MessagesEdit component once the edit button is pressed or MessagesConnection when a userName for a user who is not
+// already a friend is clicked
 
 import React, { Component } from "react";
 import MessagesEdit from "./MessagesEdit";
@@ -53,6 +54,10 @@ export default class MessagesCard extends Component {
         })
     }
 
+    handleAlreadyFriends = () => {
+        alert(`You are already friends!`);
+    }
+
     render() {
         let userObj = this.props.users.find(user => user.id === this.props.message.userId);
         let userName = userObj ? userObj.userName : "";
@@ -79,7 +84,7 @@ export default class MessagesCard extends Component {
                     </React.Fragment>
         } else {
             return <section id={`messageItem__${this.props.message.id}`} className="messagesContainer__messageItem--otherUser">
-                <h3>{userName}</h3>
+                <h3 onClick={this.handleAlreadyFriends}>{userName}</h3>
                 <p>{this.props.message.content}</p>
                 <p>At {this.props.message.timeStamp}</p>
             </section>
