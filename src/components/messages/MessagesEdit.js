@@ -1,3 +1,6 @@
+// Author: Cole Bryant. Purpose: This component renders the edit form for each of the message cards in addition to calling the put
+// fetch function to edit the content of messages
+
 import React, { Component } from "react";
 import "./Messages.css";
 

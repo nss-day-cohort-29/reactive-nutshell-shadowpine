@@ -9,7 +9,7 @@ import ArticlesBoard from "./articles/ArticlesBoard";
 import MessagesBoard from "./messages/MessagesBoard";
 import TasksManager from "../modules/TasksManager";
 import ArticlesManager from "../modules/ArticlesManager";
-//import ConnectionsManager from "../modules/ConnectionsManager";
+import ConnectionsManager from "../modules/ConnectionsManager";
 import MessagesManager from "../modules/MessagesManager";
 //import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
@@ -78,6 +78,9 @@ editMessage = (messageObj, id) => {
   })));
 }
 
+// *********************************CONNECTIONS******************************************
+
+
 
 // *********************************TASKS******************************************
   deleteTask = id => {
@@ -116,7 +119,6 @@ editMessage = (messageObj, id) => {
        )
     }
 
-
   componentDidMount() {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
@@ -137,6 +139,10 @@ editMessage = (messageObj, id) => {
     UsersManager.getAll()
       .then(users => this.setState({
         users: users
+      }));
+    ConnectionsManager.getEmbed("user")
+      .then(connections => this.setState({
+        connections: connections
       }));
     }
 
@@ -165,7 +171,8 @@ editMessage = (messageObj, id) => {
               deleteMessage={this.deleteMessage}
               editMessage={this.editMessage}
               messages={this.state.messages}
-              users={this.state.users} />
+              users={this.state.users}
+              connections={this.state.connections} />
           }}
         />
 

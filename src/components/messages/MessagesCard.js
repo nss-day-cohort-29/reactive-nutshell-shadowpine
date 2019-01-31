@@ -1,3 +1,7 @@
+// Author: Cole Bryant. Purpose: This component renders each of the message "cards" conditionally. If the user who posted the message
+// is the current user, this component also adds functionality for the edit and delete buttons. Finally, this component also
+// routes to the MessagesEdit component once the edit button is pressed
+
 import React, { Component } from "react";
 import MessagesEdit from "./MessagesEdit";
 import "./Messages.css";
@@ -28,6 +32,7 @@ export default class MessagesCard extends Component {
     }
 
     render() {
+        // let validConnections = this.props.connections.filter(connection => connection.currentUserId === Number(sessionStorage.getItem("userId")));
         let userObj = this.props.users.find(user => user.id === this.props.message.userId);
         let userName = userObj ? userObj.userName : "";
         if (this.props.message.userId === Number(sessionStorage.getItem("userId")) && this.state.showEditForm) {
