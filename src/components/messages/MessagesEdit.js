@@ -1,3 +1,6 @@
+// Author: Cole Bryant. Purpose: This component renders the edit form for each of the message cards in addition to calling the put
+// fetch function to edit the content of messages
+
 import React, { Component } from "react";
 import "./Messages.css";
 
@@ -20,17 +23,19 @@ export default class MessagesForm extends Component {
             timeStamp: this.props.message.timeStamp,
             readableTime: this.props.message.readableTime
         };
-        console.log(messageObj);
         this.props.handleSaveButton(messageObj, event);
     }
 
-
+    componentDidMount() {
+        this.setState({
+            editedContent: this.props.message.content
+        })
+    }
     render() {
         return (
             <form className="messagesContainer__messageEdit" id={`messageEdit__${this.props.message.id}`}>
-                <label />
-                <input type="text" onChange={this.handlefieldChange} />
-                <button onClick={this.createEditObject}>Save</button>
+                <input type="text" onChange={this.handlefieldChange} defaultValue={this.props.message.content}/>
+                <button type="button" onClick={this.createEditObject}>Save</button>
             </form>
         )
     }

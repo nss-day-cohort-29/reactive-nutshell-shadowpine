@@ -1,3 +1,5 @@
+// Author: Cole Bryant. Purpose: This file manages all fetch calls to the messages dataset
+
 const remoteUrl = "http://localhost:5002";
 
 export default {

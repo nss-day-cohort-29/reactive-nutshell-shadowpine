@@ -1,22 +1,18 @@
 /* eslint-disable no-dupe-class-members */
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import React, { Component } from "react";
 // import Login from "./authentication/Login";
 import TasksBoard from "./tasks/TasksBoard";
 import ArticlesBoard from "./articles/ArticlesBoard";
-//import ConnectionsBoard from "./connections/ConnectionsBoard";
 import EventsBoard from "./events/EventsBoard";
 import MessagesBoard from "./messages/MessagesBoard";
 import TasksManager from "../modules/TasksManager";
 import ArticlesManager from "../modules/ArticlesManager";
-//import ConnectionsManager from "../modules/ConnectionsManager";
+import ConnectionsManager from "../modules/ConnectionsManager";
 import MessagesManager from "../modules/MessagesManager";
 import EventsManager from "../modules/EventsManager";
 import TasksForm from "./tasks/TasksForm";
 import UsersManager from "../modules/UsersManager";
-// import ArticlesForm from "./articles/ArticlesForm";
-// import ConnectionsForm from "./connections/ConnectionsForm";
-// import EventsForm from "./events/EventsForm";
  import EditTasksForm from "./tasks/TasksEdit";
 
 
@@ -109,6 +105,15 @@ editMessage = (messageObj, id) => {
   })));
 }
 
+// *********************************CONNECTIONS******************************************
+
+postNewConnection = connectionObj => {
+  ConnectionsManager.post(connectionObj)
+  .then(() => ConnectionsManager.getEmbed("user")
+  .then(connections => this.setState({
+    connections: connections
+  })));
+}
 
 // *********************************TASKS******************************************
   deleteTask = id => {
@@ -187,6 +192,10 @@ editMessage = (messageObj, id) => {
       .then(users => this.setState({
         users: users
       }));
+    ConnectionsManager.getEmbed("user")
+      .then(connections => this.setState({
+        connections: connections
+      }));
     }
 
   render() {
@@ -219,8 +228,10 @@ editMessage = (messageObj, id) => {
               postNewMessage={this.postNewMessage}
               deleteMessage={this.deleteMessage}
               editMessage={this.editMessage}
+              postNewConnection={this.postNewConnection}
               messages={this.state.messages}
-              users={this.state.users} />
+              users={this.state.users}
+              connections={this.state.connections} />
           }}
         />
 

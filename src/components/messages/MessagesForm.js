@@ -1,3 +1,5 @@
+// Author: Cole Bryant. Purpose: This component renders the input field for posting new messages to the app.
+
 import React, { Component } from "react";
 import "./Messages.css";
 

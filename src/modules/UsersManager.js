@@ -1,3 +1,5 @@
+// Author: Cole Bryant. Purpose: This component manages all fetch calls to the users dataset
+
 const remoteUrl = "http://localhost:5002";
 
 export default {

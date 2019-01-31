@@ -19,7 +19,6 @@ handleCheckChange = e => {
 
 }
 
-
   render() {
 
     return (
