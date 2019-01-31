@@ -6,6 +6,7 @@ import MessagesCard from "./MessagesCard";
 import "./Messages.css";
 
 export default class MessagesBoard extends Component {
+
     messagesEnd=React.createRef()
 
     componentDidMount = () => {
@@ -29,7 +30,7 @@ export default class MessagesBoard extends Component {
                     <section className="messagesFeed">
                         {
                             this.props.messages.map(message => {
-                                return <MessagesCard key={message.id} {...this.props} message={message} />
+                                return <MessagesCard key={message.id} {...this.props} message={message} toggleFriendModal={this.toggleFriendModal} />
                             })
                         }
                         <div ref={this.messagesEnd}/>

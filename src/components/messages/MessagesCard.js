@@ -4,12 +4,14 @@
 
 import React, { Component } from "react";
 import MessagesEdit from "./MessagesEdit";
+import MessagesConnection from "./MessagesConnection";
 import "./Messages.css";
 
 export default class MessagesCard extends Component {
 
     state = {
-        showEditForm: false
+        showEditForm: false,
+        toggleModal: false
     }
 
     handleDeleteButton = event => {
@@ -31,8 +33,27 @@ export default class MessagesCard extends Component {
         this.props.editMessage(messageObj, idToEdit);
     }
 
+    testValidConnection = () => {
+        let validConnections = this.props.connections.filter(connection => connection.currentUserId === Number(sessionStorage.getItem("userId")));
+        let booleanValue = false;
+        if (validConnections) {
+            validConnections.forEach(connection => {
+                if (connection.userId === this.props.message.userId) {
+                    booleanValue = true;
+                    return
+                }
+            })
+        };
+        return booleanValue;
+    }
+
+    toggleFriendModal = () => {
+        this.setState({
+            toggleModal: !this.state.toggleModal
+        })
+    }
+
     render() {
-        // let validConnections = this.props.connections.filter(connection => connection.currentUserId === Number(sessionStorage.getItem("userId")));
         let userObj = this.props.users.find(user => user.id === this.props.message.userId);
         let userName = userObj ? userObj.userName : "";
         if (this.props.message.userId === Number(sessionStorage.getItem("userId")) && this.state.showEditForm) {
@@ -45,6 +66,17 @@ export default class MessagesCard extends Component {
                 <button onClick={this.handleDeleteButton}>Delete</button>
                 <button onClick={this.handleEditButton}>Edit</button>
             </section>
+        } else if (!this.testValidConnection()) {
+            return <React.Fragment>
+                    <section id={`messageItem__${this.props.message.id}`} className="messagesContainer__messageItem--otherUser">
+                        <h3 onClick={this.toggleFriendModal}>{userName}</h3>
+                        <p>{this.props.message.content}</p>
+                        <p>At {this.props.message.timeStamp}</p>
+                    </section>
+                    {this.state.toggleModal &&
+                        <MessagesConnection {...this.props} userName={userName} toggleFriendModal={this.toggleFriendModal} />
+                    }
+                    </React.Fragment>
         } else {
             return <section id={`messageItem__${this.props.message.id}`} className="messagesContainer__messageItem--otherUser">
                 <h3>{userName}</h3>
@@ -53,5 +85,4 @@ export default class MessagesCard extends Component {
             </section>
         }
     }
-
 }

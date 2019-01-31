@@ -80,7 +80,13 @@ editMessage = (messageObj, id) => {
 
 // *********************************CONNECTIONS******************************************
 
-
+postNewConnection = connectionObj => {
+  ConnectionsManager.post(connectionObj)
+  .then(() => ConnectionsManager.getEmbed("user")
+  .then(connections => this.setState({
+    connections: connections
+  })));
+}
 
 // *********************************TASKS******************************************
   deleteTask = id => {
@@ -123,11 +129,9 @@ editMessage = (messageObj, id) => {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
       .then(allArticles => {
-        console.log(allArticles)
         allArticles.sort(function(a, b){
         return Date(a.timestamp) - Date(b.timestamp);
       })
-        console.log(allArticles)
         this.setState({
           articles: allArticles
         });
@@ -175,6 +179,7 @@ editMessage = (messageObj, id) => {
               postNewMessage={this.postNewMessage}
               deleteMessage={this.deleteMessage}
               editMessage={this.editMessage}
+              postNewConnection={this.postNewConnection}
               messages={this.state.messages}
               users={this.state.users}
               connections={this.state.connections} />
