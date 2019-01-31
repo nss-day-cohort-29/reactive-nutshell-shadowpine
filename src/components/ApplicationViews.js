@@ -35,12 +35,12 @@ state = {
 addArticle = (articleObject) => {
   return ArticlesManager.post(articleObject)
     .then(() => ArticlesManager.getAll())
-    .then(articles =>
+    .then(articles =>{
       this.setState({
         articles: articles
       })
-  );
-}
+    })
+};
 
 deleteArticle = articleId => {
   ArticlesManager.delete(articleId)
@@ -123,6 +123,11 @@ editMessage = (messageObj, id) => {
     sessionStorage.setItem("userId", 1);
     ArticlesManager.getAll()
       .then(allArticles => {
+        console.log(allArticles)
+        allArticles.sort(function(a, b){
+        return Date(a.timestamp) - Date(b.timestamp);
+      })
+        console.log(allArticles)
         this.setState({
           articles: allArticles
         });
