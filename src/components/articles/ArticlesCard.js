@@ -3,6 +3,8 @@ import React, { Component } from "react";
 
 export default class ArticleCard extends Component {
     render() {
+        let sessionUser = sessionStorage.getItem("User");
+        let sessionUserId = Number(sessionUser.id)
         return (
             // create container for each individual article with title, corresponding delete button and article synopsis
             <div key={this.props.article.id} className="card">
